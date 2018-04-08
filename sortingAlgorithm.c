@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include <time.h>
 
-#define TAMREGISTROS 75000
+#define TAMREGISTROS 100000
 
 void preencheRegistros(int *registros){
     int i;
@@ -11,16 +11,40 @@ void preencheRegistros(int *registros){
     }
 }
 
-void insertionSort(int *registros){
-  int i, troca, atual;
-  clock_t start, end;
+void swap(int *registros, int primeiro, int segundo){
+  int aux;
 
-  start = clock();
-  // Código
-  printf("Ordenando...\n" );
-  end = clock();
-  printf ("Foram gastos %lf segundos para a ordenação\n",
-         ((double)( end - start ) / ((double)CLOCKS_PER_SEC )));
+  aux = registros[primeiro];
+  registros[primeiro] = registros[segundo];
+  registros[segundo] = aux;
+}
+
+//Usando pivo final
+
+int rearranjaRegistros(int *registros, int inicial, int final){
+  int pivo = registros[final]; //Caso Ruim, pivo no final
+  int j = inicial - 1;
+  for (int i = inicial; i < final; i++) {
+    if (pivo <= registros[i]) {
+      j = j + 1;
+      swap(registros, j, i);
+    }
+  }
+  registros[final] = registros[j + 1];
+  registros[j + 1] = pivo;
+
+  return (j + 1);
+}
+
+//Ordena decrescente
+void quickSort(int *registros, int inicial, int final){
+  int auxFinal;
+
+  if (inicial < final){
+    auxFinal = rearranjaRegistros(registros, inicial, final);
+    quickSort(registros, inicial, auxFinal-1);
+    quickSort(registros, auxFinal+1, final);
+  }
 }
 
 void imprimeRegistros(int *registros){
@@ -48,6 +72,7 @@ int menu(){
 int main(){
 
   int registros[TAMREGISTROS], opcao;
+  clock_t start, end;
 
   srand(time(NULL));
 
@@ -58,7 +83,12 @@ int main(){
     switch (opcao) {
       case 0: printf("Encerrando ...\n");
       break;
-      case 1: insertionSort(registros);
+      case 1:
+        start = clock();
+        quickSort(registros, 0, TAMREGISTROS-1);
+        end = clock();
+        printf ("Foram gastos %lf segundos para a ordenação\n",
+               ((double)( end - start ) / ((double)CLOCKS_PER_SEC )));
       break;
       case 2: imprimeRegistros(registros);
       break;
