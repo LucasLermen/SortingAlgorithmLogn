@@ -22,7 +22,7 @@ void swap(int *registros, int primeiro, int segundo){
 //Usando pivo final
 
 int rearranjaRegistros(int *registros, int inicial, int final){
-  int pivo = registros[final]; //Caso Ruim, pivo no final
+  int pivo = registros[final];
   int j = inicial - 1;
   for (int i = inicial; i < final; i++) {
     if (pivo <= registros[i]) {
@@ -89,6 +89,7 @@ int main(){
         end = clock();
         printf ("Foram gastos %lf segundos para a ordenação\n",
                ((double)( end - start ) / ((double)CLOCKS_PER_SEC )));
+
       break;
       case 2: imprimeRegistros(registros);
       break;
