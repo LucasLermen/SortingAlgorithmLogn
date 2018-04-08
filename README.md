@@ -35,10 +35,6 @@ Bucket Sort
 
 Quick Sort
 
-![alt text](http://codepumpkin.com/wp-content/uploads/2017/10/BubbleSort_Avg_case.gif)
-
-Shell Sort
-
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/9/9c/Quicksort-example.gif)
 
 Dentre estes a dupla implementará o Quick Sort
